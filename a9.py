@@ -75,7 +75,7 @@ def speak(text):
 
 
 def send_query_to_openai(text):
-    openai.api_key = "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"
+    openai.api_key = "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"
     openai.organization = "org-OoztSZ0bl4hd36f4gED0N8bj"
 
     response = openai.ChatCompletion.create(
