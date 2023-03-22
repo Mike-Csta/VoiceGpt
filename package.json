@@ -1,0 +1,19 @@
+{
+  "name": "nodevoicegpt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/speech": "^5.4.0",
+    "mic": "^2.1.2",
+    "node-microphone": "^0.1.6",
+    "node-record-lpcm16": "^1.0.1",
+    "python-shell": "^5.0.0",
+    "record": "^0.2.0"
+  }
+}
