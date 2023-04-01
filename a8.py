@@ -53,7 +53,7 @@ def speak(text):
 
 
 def send_query_to_openai(text):
-    openai.api_key = "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"
+    openai.api_key = "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"
     openai.organization = "org-OoztSZ0bl4hd36f4gED0N8bj"
 
     response = openai.ChatCompletion.create(
@@ -92,8 +92,8 @@ def recognize_speech():
         print(f"Rozpoznano: {text}")
         # threading.Thread(target=speak, args=("już ci odpowiadam",)).start()
         ans = send_query_to_openai(text)
-  
-        speak(ans)
+        if ans:  # Dodaj ten warunek
+            speak(ans)
         return text.lower()
     except sr.UnknownValueError:
         print("Nie rozpoznano mowy")
@@ -104,7 +104,7 @@ def recognize_speech():
 
 # Główna pętla programu
 while True:
-    speak("Witaj, mam na imie grażyna i w sumie to wiesz kim jestem")
+    speak("Witaj, mam na imie grażyna i jestem twoim wychowawcą. czego znowu odemnie chcesz?")
     command = recognize_speech()
 
     if name.lower() in command:

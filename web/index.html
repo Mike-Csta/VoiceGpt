@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Test</h1>
+    <button id="startButton" onclick="startScript()">Uruchom</button>
+    <button id="stopButton" onclick="stopScript()">Zatrzymaj</button>
+    <button id="changeIntroButton" onclick="changeIntroText()">
+      Zmień tekst wprowadzający
+    </button>
+    <button id="changeSystemButton" onclick="changeSystemText()">
+      Zmień tekst systemu
+    </button>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        eel.expose(startScript);
+        eel.expose(stopScript);
+        eel.expose(changeIntroText);
+        eel.expose(changeSystemText);
+      });
+    </script>
+  </body>
+</html>

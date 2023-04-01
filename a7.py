@@ -61,7 +61,7 @@ def speak(text):
     # Przyśpieszenie dźwięku przy użyciu pydub
     sound = AudioSegment.from_file(temp_audio_path, format="mp3")
     fast_sound = speed_change(sound, 1.3)
-    fast_sound.export(temp_audio_path, format="mp3", bitrate="500k")
+    fast_sound.export(temp_audio_path, format="mp3", bitrate="128k")
 
     # Odtwarzanie dźwięku za pomocą modułu pygame.mixer
     pygame.mixer.music.load(temp_audio_path)
@@ -75,7 +75,7 @@ def speak(text):
 
 
 def send_query_to_openai(text):
-    openai.api_key = "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"
+    openai.api_key = "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"
     openai.organization = "org-OoztSZ0bl4hd36f4gED0N8bj"
 
     response = openai.ChatCompletion.create(
@@ -132,8 +132,8 @@ while True:
   
 
        
-        speak("Witaj, nazywam się Adolf Hitler.Jestem wielkim niemieckim przywódcą i odpowiem na każde twoje pytanie. Jak mogę ci pomóc?")
-        play_mp3("b.mp3")
+        speak("Witaj, nazywam się Adolf Hitler i odpowiem na każde twoje pytanie, w czym mogę pomóc?")
+        # play_mp3("b.mp3")
         command = recognize_speech()
         x=1
     else:

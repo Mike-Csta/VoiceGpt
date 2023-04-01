@@ -8,7 +8,15 @@ import pygame
 import tempfile
 from pydub import AudioSegment
 import threading
+import eel
+
+# Inicjalizacja Eel i ustawienie folderu z plikami interfejsu
+eel.init("web")
 # Inicjalizacja silnika mowy
+
+
+running = True
+
 engine = pyttsx3.init()
 
 # Inicjalizacja rozpoznawania mowy
@@ -67,22 +75,28 @@ def speak(text):
     pygame.mixer.music.load(temp_audio_path)
     pygame.mixer.music.play()
     while pygame.mixer.music.get_busy():
-        pygame.time.Clock().tick(10)
+        pygame.time.Clock().tick(100)
 
     # Zatrzymanie odtwarzania i usunięcie pliku dźwiękowego
     pygame.mixer.music.stop()
     # os.remove(temp_audio_path)
 
 
+conversation_history = []
+
 def send_query_to_openai(text):
-    openai.api_key = "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"
+    global conversation_history
+    
+    openai.api_key = "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"
     openai.organization = "org-OoztSZ0bl4hd36f4gED0N8bj"
+
+    conversation_history.append({"role": "user", "content": text})
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "jesteś asystentem głosowym, który rozmawia ze mną jak człowiek"},
-            {"role": "user", "content": text},
+            {"role": "system", "content": "jesteś moim prywatnym nauczycielem angielskiego ale rozmawiamy tylko po polsku."},
+            *conversation_history
         ],
         temperature=0,
         stream=True
@@ -99,12 +113,18 @@ def send_query_to_openai(text):
             zdanie += text  # concatenate the text
 
             if '.' in zdanie:
+                print(zdanie)
                 speak(zdanie)
+              
                 zdanie = ""
+
+    conversation_history.append({"role": "assistant", "content": zdanie.strip()})
+
 
 
 # Funkcja do rozpoznawania mowy
 def recognize_speech():
+    r = sr.Recognizer()
     with sr.Microphone() as source:
         r.adjust_for_ambient_noise(source)
         audio = r.listen(source)
@@ -127,30 +147,49 @@ def recognize_speech():
 # Główna pętla programu
 
 x=0
-while True:
-    if x ==0:
-  
-
-       
-        speak("W czym mogę pomóc?")
-        play_mp3("b.mp3")
-        command = recognize_speech()
-        x=1
-    else:
-        play_mp3("b.mp3")
-        command = recognize_speech()
-    if name.lower() in command:
-        speak(f"Tak, słucham {name}")
-
-        speak("Cześć, jak mogę ci pomóc?")
-
-        while True:
+@eel.expose
+def start_script():
+    global running
+    running = True
+    x = 0
+    while running:
+        if x == 0:
+            speak("Witaj, Jestem od teraz twoim nauczycielem angielskiego, w czym mogę pomóc?")
+            command = recognize_speech()
+            x = 1
+        else:
+            # play_mp3("b.mp3")
             command = recognize_speech()
 
-            if "do widzenia" in command:
-                speak("Do zobaczenia!")
-                break
+        if name.lower() in command:
+            speak(f"Tak, słucham {name}")
+            speak("Cześć, jak mogę ci pomóc?")
+            while True:
+                command = recognize_speech()
 
-    else:
-        # speak(f"coś jeszcze?")
-        print("xD")
+                if "do widzenia" in command:
+                    speak("Do zobaczenia!")
+                    break
+                else:
+                    send_query_to_openai(command)
+        else:
+            print("xD")
+
+
+@eel.expose
+def stop_script():
+    global running
+    running = False
+
+@eel.expose
+def change_intro_text(new_text):
+    global intro_text
+    intro_text = new_text
+
+@eel.expose
+def change_system_text(new_text):
+    global system_text
+    system_text = new_text
+
+# Uruchomienie aplikacji Eel
+eel.start("index.html", size=(800, 600))
