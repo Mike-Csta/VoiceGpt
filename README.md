@@ -29,7 +29,8 @@ Projekt został stworzony przy użyciu następujących technologii:
 - pyttsx3
 - Google Text-to-Speech
 - Pygame
-
+- eel
+  
 ## Jak Używać
 1. Uruchom program, a Grażyna powita Cię i zapyta, czego potrzebujesz.
 2. W każdej chwili możesz zadać pytanie lub wydać polecenie, pamiętając, aby zwracać się do niej imieniem "Grażyna".
