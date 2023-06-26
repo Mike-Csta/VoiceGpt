@@ -14,8 +14,8 @@ Przed rozpoczęciem upewnij się, że masz zainstalowane następujące narzędzi
 
 ### Kroki
 
-1. Sklonuj repozytorium na swoje lokalne urządzenie używając `git clone https://github.com/TwojeGithuboweImie/voicegpt.git`.
-2. Przejdź do katalogu projektu `cd voicegpt`.
+1. Sklonuj repozytorium na swoje lokalne urządzenie używając `git clone https://github.com/Mike-Csta/VoiceGpt.git`.
+2. Przejdź do katalogu projektu `cd VoiceGpt`.
 3. Zainstaluj wymagane biblioteki używając `pip install -r requirements.txt`.
 4. Uzupełnij swój klucz API OpenAI w pliku konfiguracyjnym.
 5. Uruchom projekt używając `python [plik].py`.
